@@ -1,0 +1,31 @@
+net:
+  channels: 128
+  blocks: 6
+  in_planes: 17
+mcts:
+  simulations: 100
+  c_puct: 1.5
+  dirichlet_alpha: 0.3
+  dirichlet_eps: 0.25
+  temperature_moves: 20
+train:
+  lr: 0.001
+  weight_decay: 0.0001
+  batch_size: 256
+  epochs_per_iter: 1
+  replay_buffer_games: 2000
+  value_weight: 1.0
+selfplay:
+  games_per_iter: 96
+  max_moves: 200
+  resign_threshold: -0.95
+  parallel_games: 16
+  num_workers: 8
+device: cuda
+precision: bf16
+checkpoint_dir: checkpoints
+seed: 42
+iterations: 500
+run_name: run_0
+runs_dir: runs
+tensorboard: true

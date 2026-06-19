@@ -1,0 +1,37 @@
+# run_1 — experiment vs run_0 baseline.
+# Changes from run_0: c_puct 1.5->2.0, temperature_moves 20->30, net.blocks 6->7, iterations 500->200.
+# Everything else identical to run_0 for comparability.
+
+run_name: run_1
+iterations: 200
+device: cuda
+precision: bf16
+seed: 42
+runs_dir: runs
+tensorboard: true
+
+net:
+  channels: 128
+  blocks: 7              # +1 depth (was 6)
+
+mcts:
+  simulations: 100
+  c_puct: 2.0            # bumped (was 1.5)
+  dirichlet_alpha: 0.3
+  dirichlet_eps: 0.25
+  temperature_moves: 30  # +10 exploratory moves (was 20)
+
+selfplay:
+  games_per_iter: 96
+  parallel_games: 16
+  num_workers: 8
+  max_moves: 200
+  resign_threshold: -0.95
+
+train:
+  lr: 0.001
+  weight_decay: 0.0001
+  batch_size: 256
+  epochs_per_iter: 1
+  replay_buffer_games: 2000
+  value_weight: 1.0

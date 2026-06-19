@@ -1,0 +1,9 @@
+# Core
+torch>=2.1            # neural net + autograd (install the CUDA build for your GPU)
+python-chess>=1.10    # board rules, move generation, UCI engine interface
+numpy>=1.24
+
+# Nice-to-haves
+tqdm>=4.66            # progress bars during self-play / training
+pyyaml>=6.0           # YAML run configs (configs/*.yaml)
+tensorboard>=2.15     # optional: scalar logging (runs/<name>/tb)

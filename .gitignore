@@ -1,0 +1,55 @@
+# ─── Model weights & checkpoints (the 32 GB problem) ────────────────────────
+# Keep training artifacts (metrics, logs, plots, configs) but NEVER the weights.
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+runs/**/checkpoints/
+runs/**/_worker_net.pt
+
+# TensorBoard event files (binary, viewer-only — regenerate from metrics if needed)
+runs/**/tb/
+events.out.tfevents.*
+
+# NOTE: small per-run artifacts are intentionally TRACKED for portfolio value:
+#   runs/**/config.yaml, metrics.csv, metrics.jsonl, progress.log, *.png
+
+# ─── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ─── Virtual environments ───────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.conda/
+
+# ─── Editors / OS cruft ─────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# ─── Misc local junk ────────────────────────────────────────────────────────
+*.log.*
+*.tmp
+*.bak
+"*(Copy)*"
+
+# Separate project (its own git repo) — not part of this one
+azlite_type_chess_bot/

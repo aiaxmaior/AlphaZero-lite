@@ -1,0 +1,36 @@
+# chess-az training config.  Run:  python -m src.train --config configs/default.yaml
+# Any field omitted falls back to the dataclass default in src/config.py.
+# CLI flags (--sims, --games, --parallel, --precision, --iterations, --name) override these.
+
+run_name: ""          # blank -> auto timestamp: run_YYYYmmdd_HHMMSS
+iterations: 80        # self-play -> train cycles (checkpoints every iteration)
+device: cuda          # cuda | cuda:0 | cpu  (auto-falls back to cpu if no GPU)
+precision: bf16       # bf16 | fp16 | fp32   (bf16 uses the 4070 Ti tensor cores)
+seed: 42
+runs_dir: runs
+tensorboard: true     # log scalars to runs/<name>/tb if tensorboard is installed
+
+net:
+  channels: 128       # width of the residual tower
+  blocks: 6           # depth (residual blocks)
+
+mcts:
+  simulations: 160    # rollouts per move — quality vs speed (linear cost)
+  c_puct: 1.5         # exploration constant
+  dirichlet_alpha: 0.3
+  dirichlet_eps: 0.25
+  temperature_moves: 20   # sample moves for the first N plies, then play greedily
+
+selfplay:
+  games_per_iter: 60
+  parallel_games: 64  # games batched in lockstep -> one GPU call per sim (feeds the card)
+  max_moves: 200      # adjudicate a draw past this many plies
+  resign_threshold: -0.95
+
+train:
+  lr: 0.001
+  weight_decay: 0.0001
+  batch_size: 256
+  epochs_per_iter: 1
+  replay_buffer_games: 2000   # train on positions from the most recent N games
+  value_weight: 1.0           # value-MSE weight vs policy-cross-entropy
